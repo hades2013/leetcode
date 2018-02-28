@@ -120,21 +120,21 @@ int** threeSumA(int* nums, int numsSize, int* returnSize) {
 
 int main(int argc, char const *argv[])
 {
-	int nums[] = {-1, 0, 1, 2, -1, -4}; 
+	int nums[] = {-1, 0, 1, 2, -1, -4, 5, -5, 0}; 
 	int numsSize = sizeof(nums)/sizeof(int); 
+	int returnSize = 3; 
 	printf("%d\n",numsSize);
-	int *returnSize = NULL; 
 	int **result = NULL;
-	result = threeSumB(nums, numsSize, returnSize); 
-/*	printf("%d\n", *returnSize);
+	result = threeSumB(nums, numsSize, &returnSize); 
+	printf("%d\n", returnSize);
 	int i, j; 
-	for(i = 0; i < 3; i++){
-		for(j = 0; j < numsSize/3; j++){
-			printf("%d, ", result[i][j]);
+	for(i = 0; i < returnSize; i++){
+		for(j = 0; j < 3; j++){
+			printf("%d\t", result[i][j]);
 		}
 		printf("\n");
 	}
 	printf("\n");
-	*/
 	return 0;
 }
+
