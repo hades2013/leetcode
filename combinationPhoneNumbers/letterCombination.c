@@ -9,6 +9,62 @@
 #include <stdlib.h>
 #include <string.h>
 
+char map[10][4] = {
+    {' ', ' ', ' ', ' '}, //0
+    {' ', ' ', ' ', ' '}, //1
+    {'a', 'b', 'c', ' '}, //2
+    {'d', 'e', 'f', ' '}, //3
+    {'g', 'h', 'i', ' '}, //4
+    {'j', 'k', 'l', ' '},
+    {'m', 'n', 'o', ' '},
+    {'p', 'q', 'r', 's'},
+    {'t', 'u', 'v', ' '}, //8
+    {'w', 'x', 'y', 'z'} //9
+};
+
+void letterComb(char* digits, int* returnSize, char *result, int ind, char **ans)
+{
+    int i = 0;
+    char c;
+    char *letter = map[digits[0] - '0'];
+
+    if (digits[0] == 0) {
+        char *res = malloc(strlen(result) + 1);
+        strcpy(res, result);
+        ans[(*returnSize)] = res;
+        (*returnSize)++;
+        return;
+    }
+
+    while ((c = letter[i]) != ' ') {
+        result[ind] = c;
+        letterComb(digits + 1, returnSize, result, ind + 1, ans);
+        i++;
+        if (i == 4)
+            break;
+    }
+    return;
+}
+
+char** letterCombinationsB(char* digits, int* returnSize) {
+    
+    int ind = 0, size = 0;
+    int len = strlen(digits) + 1;
+    char result[len];
+    
+    if (digits == NULL || strlen(digits) == 0)
+        return NULL;
+  
+    char **ans = (char **) malloc(sizeof (char *) * 32768);
+        
+    memset(result, 0, len);
+    
+    letterComb(digits, &size, result, ind, ans);
+    *returnSize = size;
+    
+    return ans;
+}
+
 static const char* letters[10] = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 
 void combine(char* digits, int from, int to, char* result, char** combinations, int* index) {
@@ -27,7 +83,7 @@ void combine(char* digits, int from, int to, char* result, char** combinations, 
 	}
 }
 
-char** letterCombinations(char* digits, int* returnSize) {
+char** letterCombinationsA(char* digits, int* returnSize) {
     if (digits == NULL) {
     	return NULL;
     }
@@ -61,7 +117,7 @@ int main(int argc, char const *argv[])
 	int i;   
 
 	while(gets(digits)){
-		result = letterCombinations(digits, &returnSize); 
+		result = letterCombinationsB(digits, &returnSize); 
 		for(i = 0; i < returnSize; i++)
 				printf("%s , ", result[i]);
 
